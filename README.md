@@ -22,5 +22,5 @@ Nothing should appear, that's a good thing.
 ### Workshop
 
 Complete the remaining 7 steps specified in the code comments of `main.js`.
-You will be experimenting with code for provisioning a new server in a particular data center, that is initialized with a specified virtual machine image.
+You will be experimenting with code for provisioning a new server in a particular data center, that is initialized with a specified virtual machine image, using the [digitalocean api v2](https://developers.digitalocean.com/v2/).
 
