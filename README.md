@@ -1,6 +1,8 @@
 ServersWorkshop
 ===============
 
+You must get into pairs.  Place your names  and github repos [here](https://docs.google.com/spreadsheets/d/1y_9WYfoBJqkUF93yonDE8payQnEwrIrGxlrIWOWSv-U/edit#gid=0):
+
 ### Setup
 
 * \#0 Make sure you have [git](http://git-scm.com/) installed, as well as [node.js](http://nodejs.org/)
