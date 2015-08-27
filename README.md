@@ -24,7 +24,8 @@ You will see, output:
 
 **Bonus**: The first 3 pairs to finish workshop will receive +5 points on their final workshop grade. *But*,
 if the rate-limit hits 0, everyone will loose 5 points on their workshop final grade. 
-![saw](https://cloud.githubusercontent.com/assets/742934/9525410/ff96de96-4cb1-11e5-84af-19b70cbae957.png)
+
+<img src="https://cloud.githubusercontent.com/assets/742934/9525410/ff96de96-4cb1-11e5-84af-19b70cbae957.png" alt="Saw" width="500px;"/>
 
 ### Workshop
 
