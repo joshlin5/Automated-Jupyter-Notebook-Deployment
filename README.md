@@ -5,9 +5,9 @@ You must get into pairs.  Place your names  and github repos [here](https://docs
 
 ### Setup
 
-* \#0 Make sure you have [git](http://git-scm.com/) installed, as well as [node.js](http://nodejs.org/)
-* \#1 Start with forking this repository.
-* \#2 Clone local copy 
+1. Make sure you have [git](http://git-scm.com/) installed, as well as [node.js](http://nodejs.org/)
+2. Start with forking this repository.
+3. Clone local copy 
 
 `git clone https://github.ncsu.edu/YOUR REPO`
 
