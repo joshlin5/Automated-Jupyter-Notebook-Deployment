@@ -37,4 +37,4 @@ The code makes use of the [needle api](https://github.com/tomas/needle#needle) f
 
 ##### Final Step
 
-Create a new branch, remove api token from `main.js`, and push to your REPO.
+Create a new branch, remove api token from `main.js`, checkout new branch, commit change, and push to your REPO.
