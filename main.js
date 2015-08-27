@@ -2,13 +2,13 @@ var needle = require("needle");
 var os   = require("os");
 
 var config = {};
-config.token = "9eb414058ee0d0e5bcb60e428cfb5e2e0ba3962599944d4dddebf1dabd47ef1d";
+config.token = "801bc4076840280c3324203dceffba1923a072c7c1c5548de648e7faa088a2df";
 
 var headers =
-					{
-						'Content-Type':'application/json',
-						Authorization: 'Bearer ' + config.token
-					};
+{
+	'Content-Type':'application/json',
+	Authorization: 'Bearer ' + config.token
+};
 
 // Documentation for needle:
 // https://github.com/tomas/needle
@@ -30,14 +30,16 @@ var client =
 			"image":imageName,
 			// Id to ssh_key already associated with account.
 			"ssh_keys":[625870],
+			//"ssh_keys":null,
 			"backups":false,
-			"ipv6":true,
+			"ipv6":false,
 			"user_data":null,
 			"private_networking":null
-		}
+		};
+
 		console.log("Attempting to create: "+ JSON.stringify(data) );
 
-		needle.post("https://api.digitalocean.com/v2/droplets", data, {headers:headers}, onResponse );
+		needle.post("https://api.digitalocean.com/v2/droplets", data, {headers:headers,json:true}, onResponse );
 	}
 };
 
@@ -49,11 +51,22 @@ var client =
 client.listRegions(function(error, response)
 {
 	var data = response.body;
-	// console.log( JSON.stringify(response.body) );
-	for(var i=0; i<data.regions.length; i++)
+	//console.log( JSON.stringify(response.body) );
+
+	if( response.headers )
 	{
+		console.log( "Calls remaining", response.headers["ratelimit-remaining"] );
+	}
+
+	if( data.regions )
+	{
+		for(var i=0; i<data.regions.length; i++)
+		{
+
+		}
 	}
 });
+
 
 // #############################################
 // #2 Extend the client object to have a listImages method
@@ -71,6 +84,7 @@ client.listRegions(function(error, response)
 // var image = ""; // Fill one in from #2
 // client.createDroplet(name, region, image, function(err, resp, body)
 // {
+// 	console.log(body);
 // 	// StatusCode 202 - Means server accepted request.
 // 	if(!err && resp.statusCode == 202)
 // 	{
