@@ -31,6 +31,14 @@ if the rate-limit hits 0, everyone will loose 5 points on their workshop final g
 
 Complete the remaining 7 steps specified in the code comments of [`main.js`](https://github.ncsu.edu/CSC-DevOps-Spring2015/ServersWorkshop/blob/master/main.js).
 
+1. List datacenters.
+2. List VM images.
+3. Create droplet.
+4. Get droplet ip
+5. Ping ip
+6. Destroy drop
+7. Ping ip, make sure dead.
+
 You will be experimenting with code for provisioning a new server in a particular data center, that is initialized with a specified virtual machine image, using the [digitalocean api v2](https://developers.digitalocean.com/v2/).
 
 The code makes use of the [needle api](https://github.com/tomas/needle#needle) for making http requests.
