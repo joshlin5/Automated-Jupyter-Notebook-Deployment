@@ -46,7 +46,7 @@ var client =
 // #############################################
 // #1 Print out a list of available regions
 // Comment out when completed.
-// https://developers.digitalocean.com/#list-all-regions
+// https://developers.digitalocean.com/documentation/v2/#list-all-regions
 // use 'slug' property
 client.listRegions(function(error, response)
 {
@@ -71,7 +71,7 @@ client.listRegions(function(error, response)
 // #############################################
 // #2 Extend the client object to have a listImages method
 // Comment out when completed.
-// https://developers.digitalocean.com/#images
+// https://developers.digitalocean.com/documentation/v2/#images
 // - Print out a list of available system images, that are AVAILABLE in a specified region.
 // - use 'slug' property
 
@@ -95,7 +95,7 @@ client.listRegions(function(error, response)
 // #############################################
 // #4 Extend the client to retrieve information about a specified droplet.
 // Comment out when done.
-// https://developers.digitalocean.com/#retrieve-an-existing-droplet-by-id
+// https://developers.digitalocean.com/documentation/v2/#retrieve-an-existing-droplet-by-id
 // REMEMBER POST != GET
 // Most importantly, print out IP address!
 var dropletId = "3788359";
@@ -107,7 +107,7 @@ var dropletId = "3788359";
 // #############################################
 // #6 Extend the client to DESTROY the specified droplet.
 // Comment out when done.
-// https://developers.digitalocean.com/#delete-a-droplet
+// https://developers.digitalocean.com/documentation/v2/#delete-a-droplet
 // HINT, use the DELETE verb.
 // HINT #2, needle.delete(url, data, options, callback), data needs passed as null.
 // No response body will be sent back, but the response code will indicate success.
