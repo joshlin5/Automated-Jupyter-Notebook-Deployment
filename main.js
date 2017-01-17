@@ -2,7 +2,7 @@ var needle = require("needle");
 var os   = require("os");
 
 var config = {};
-config.token = "c0576da34d0b5ed8e77e75b8a3fc14a05657120c4e6acb3c2f6e9e6dc32dfd57";
+config.token = "e424d9f1ec69fdd27014a5c62bb2b73971a7391f0570a04006b84ecd4e4b2fc2";
 
 var headers =
 {
@@ -29,7 +29,7 @@ var client =
 			"size":"512mb",
 			"image":imageName,
 			// Id to ssh_key already associated with account.
-			"ssh_keys":[625870],
+			"ssh_keys":[5949695],
 			//"ssh_keys":null,
 			"backups":false,
 			"ipv6":false,
