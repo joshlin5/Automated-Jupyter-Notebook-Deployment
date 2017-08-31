@@ -3,18 +3,6 @@ ServersWorkshop
 
 You must get into pairs.  And there is a *twist*.
 
-### Help
-
-Typing out javascript code here:
-http://www.pythontutor.com/javascript.html#mode=edit
-
-Editors:
-
-* http://www.sublimetext.com/2
-* https://macromates.com/download
-* https://atom.io/
-* https://code.visualstudio.com/
-
 ### Setup
 
 1. Make sure you have [git](http://git-scm.com/) installed, as well as [node.js](http://nodejs.org/)
