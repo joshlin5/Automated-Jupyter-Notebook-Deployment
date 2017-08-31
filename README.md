@@ -45,7 +45,17 @@ Complete the remaining 7 steps specified in the code comments of [`main.js`](htt
 3. Create droplet.
 4. Get droplet ip
 5. Ping ip
-6. Destroy drop
+6. Destroy drop (not that for using DELETE in needle, the parameters change:)
+   ```javascript
+   var options = {
+      username: 'fidelio',
+      password: 'x'
+   }
+ 
+   needle.delete('https://api.app.com/messages/123', null, options, function(err, resp) {
+      // in this case, data may be null, but you need to explicity pass it. 
+   });
+   ```
 7. Ping ip, make sure dead.
 
 You will be experimenting with code for provisioning a new server in a particular data center, that is initialized with a specified virtual machine image, using the [digitalocean api v2](https://developers.digitalocean.com/v2/).
