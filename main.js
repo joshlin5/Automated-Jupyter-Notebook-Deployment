@@ -2,7 +2,8 @@ var needle = require("needle");
 var os   = require("os");
 
 var config = {};
-config.token = "e424d9f1ec69fdd27014a5c62bb2b73971a7391f0570a04006b84ecd4e4b2fc2";
+config.token = process.env.DOTOKEN;
+console.log("Your token is:", config.token);
 
 var headers =
 {
@@ -51,7 +52,7 @@ var client =
 client.listRegions(function(error, response)
 {
 	var data = response.body;
-	//console.log( JSON.stringify(response.body) );
+	console.log( JSON.stringify(response.body) );
 
 	if( response.headers )
 	{
@@ -62,7 +63,7 @@ client.listRegions(function(error, response)
 	{
 		for(var i=0; i<data.regions.length; i++)
 		{
-
+	
 		}
 	}
 });

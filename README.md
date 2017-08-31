@@ -27,6 +27,15 @@ Editors:
 
 `npm install`
 
+##### Set your token
+
+```
+# Mac/Linux
+export DOTOKEN="xxx"
+# Windows
+setx DOTOKEN xxx
+```
+
 ##### Run the node program
 
 `node main.js`
