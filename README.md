@@ -75,7 +75,7 @@ For example, if an API was created to enable an application to get information a
 
 Query parameters can be provided to provide additional information to the request. For example, `GET /users?country=France` would return a list of all users in France.
 
-A response typically is composed of several parts: including headers, status code, and body.
+A [response](https://www.tutorialspoint.com/http/http_message_examples.htm) typically is composed of several parts: including headers, status code, and body.
 
 Headers will may useful information, such as rate-limits quotas, or properties of the response, such as whether it is encoded or compressed in a particular format.
 
