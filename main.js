@@ -1,7 +1,9 @@
-const needle = require("needle");
-const chalk = require('chalk');
+const got    = require("got");
+const chalk  = require('chalk');
+const os     = require('os');
 
 var config = {};
+// Retrieve our api token from the environment variables.
 config.token = process.env.DOTOKEN;
 
 if( !config.token )
@@ -14,34 +16,60 @@ if( !config.token )
 
 console.log(chalk.green(`Your token is: ${config.token}`));
 
-
-var headers =
+// Configure our headers to use our token when making REST api requests.
+const headers =
 {
 	'Content-Type':'application/json',
 	Authorization: 'Bearer ' + config.token
 };
 
-// Documentation for needle:
-// https://github.com/tomas/needle
 
-var client =
+class DigitalOceanProvider
 {
-	listRegions: function( onResponse )
-	{
-		needle.get("https://api.digitalocean.com/v2/regions", {headers:headers}, onResponse)
-	},
+	// Documentation for needle:
+	// https://github.com/tomas/needle
 
-	createDroplet: function (dropletName, region, imageName, onResponse)
+	async listRegions()
 	{
+		let response = await got('https://api.digitalocean.com/v2/regions', { headers: headers, json:true })
+							 .catch(err => console.error(`listRegions ${err}`));
+							 
+		if( !response ) return;
+
+		if( response.body.regions )
+		{
+			for( let region of response.body.regions)
+			{
+				// Print out
+			}
+		}
+
+		if( response.headers )
+		{
+			console.log( chalk.yellow(`Calls remaining ${response.headers["ratelimit-remaining"]}`) );
+		}
+	}
+
+	async listImages( )
+	{
+		// HINT: Add this to the end to get better filter results: ?type=distribution&per_page=100
+	}
+
+	async createDroplet (dropletName, region, imageName )
+	{
+		if( dropletName == "" || region == "" || imageName == "" )
+		{
+			console.log( chalk.red("You must provide non-empty parameters for createDroplet!") );
+			return;
+		}
+
 		var data = 
 		{
 			"name": dropletName,
 			"region":region,
 			"size":"512mb",
 			"image":imageName,
-			// Id to ssh_key already associated with account.
-			"ssh_keys":[5949695],
-			//"ssh_keys":null,
+			"ssh_keys":null,
 			"backups":false,
 			"ipv6":false,
 			"user_data":null,
@@ -50,86 +78,130 @@ var client =
 
 		console.log("Attempting to create: "+ JSON.stringify(data) );
 
-		needle.post("https://api.digitalocean.com/v2/droplets", data, {headers:headers,json:true}, onResponse );
+		// let response = await got.post("https://api.digitalocean.com/v2/droplets", 
+		// {
+		// 	headers:headers,
+		// 	json:true,
+		// 	body: data
+		// }).catch( err => 
+		// 	console.error(chalk.red(`createDroplet: ${err}`)) 
+		// );
+
+		// if( !response ) return;
+
+		// console.log(response.statusCode);
+		// console.log(response.body);
+
+		// if(response.statusCode == 202)
+		// {
+		// 	console.log(chalk.green(`Created droplet id ${response.body.droplet.id}`));
+		// }
 	}
+
+	async dropletInfo (id)
+	{
+		if( typeof id != "number" )
+		{
+			console.log( chalk.red("You must provide an integer id for your droplet!") );
+			return;
+		}
+
+		// Make REST request
+
+		if( !response ) return;
+
+		if( response.body.droplet )
+		{
+			let droplet = response.body.droplet;
+			console.log(droplet);
+
+			// Print out IP address
+		}
+
+	}
+
+	async deleteDroplet(id)
+	{
+		if( typeof id != "number" )
+		{
+			console.log( chalk.red("You must provide an integer id for your droplet!") );
+			return;
+		}
+
+		// HINT, use the DELETE verb.
+
+		if( !response ) return;
+
+		// No response body will be sent back, but the response code will indicate success.
+		// Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
+		if(response.statusCode == 204)
+		{
+			console.log(`Deleted droplet ${id}`);
+		}
+
+	}
+
 };
 
-// #############################################
-// #1 Print out a list of available regions
-// Comment out when completed.
-// https://developers.digitalocean.com/documentation/v2/#list-all-regions
-// use 'slug' property
-client.listRegions(function(error, response)
+
+async function provision()
 {
-	var data = response.body;
-	// Uncomment if you need help debugging response.
-	// console.log( JSON.stringify(response.body, null, 3) );
+	let client = new DigitalOceanProvider();
 
-	if( response.headers )
-	{
-		console.log( chalk.yellow(`Calls remaining ${response.headers["ratelimit-remaining"]}`) );
-	}
+	// #############################################
+	// #1 Print out a list of available regions
+	// Comment out when completed.
+	// https://developers.digitalocean.com/documentation/v2/#list-all-regions
+	// use 'slug' property
+	await client.listRegions();
 
-	if( data.regions )
-	{
-		for(var i=0; i<data.regions.length; i++)
-		{
+	// #############################################
+	// #2 Extend the client object to have a listImages method
+	// Comment out when completed.
+	// https://developers.digitalocean.com/documentation/v2/#images
+	// - Print out a list of available system images, that are AVAILABLE in a specified region.
+	// - use 'slug' property or id if slug is null
+	// await client.listImages();
+
+	// #############################################
+	// #3 Create an droplet with the specified name, region, and image
+	// Comment out when completed. ONLY RUN ONCE!!!!!
+	var name = "UnityId"+os.hostname();
+	var region = ""; // Fill one in from #1
+	var image = ""; // Fill one in from #2
+	// await client.createDroplet(name, region, image);
+
+	// Record the droplet id that you see print out in a variable.
+	// We will use this to interact with our droplet for the next steps.
+	// var dropletId = <id from step number 3>;
+
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// BEFORE MOVING TO STEP FOR, REMEMBER TO COMMENT OUT THE `createDroplet()` call!!!
+
+	// #############################################
+	// #4 Extend the client to retrieve information about a specified droplet.
+	// Comment out when done.
+	// https://developers.digitalocean.com/documentation/v2/#retrieve-an-existing-droplet-by-id
+	// REMEMBER POST != GET
+	// Most importantly, print out IP address!
+	// await client.dropletInfo(dropletId);
 	
-		}
-	}
-});
+	// #############################################
+	// #5 In the command line, ping your server, make sure it is alive!
+	// ping xx.xx.xx.xx
+
+	// #############################################
+	// #6 Extend the client to DESTROY the specified droplet.
+	// https://developers.digitalocean.com/documentation/v2/#delete-a-droplet
+	// await client.deleteDroplet(dropletId);
+
+	// #############################################
+	// #7 In the command line, ping your server, make sure it is dead!
+	// ping xx.xx.xx.xx
+}
 
 
-// #############################################
-// #2 Extend the client object to have a listImages method
-// Comment out when completed.
-// https://developers.digitalocean.com/documentation/v2/#images
-// - Print out a list of available system images, that are AVAILABLE in a specified region.
-// - use 'slug' property
-
-// #############################################
-// #3 Create an droplet with the specified name, region, and image
-// Comment out when completed. ONLY RUN ONCE!!!!!
-// Write down/copy droplet id.
-// var name = "UnityId"+os.hostname();
-// var region = ""; // Fill one in from #1
-// var image = ""; // Fill one in from #2
-// client.createDroplet(name, region, image, function(err, resp, body)
-// {
-// 	console.log(body);
-// 	// StatusCode 202 - Means server accepted request.
-// 	if(!err && resp.statusCode == 202)
-// 	{
-// 		console.log( JSON.stringify( body, null, 3 ) );
-// 	}
-// });
-
-// #############################################
-// #4 Extend the client to retrieve information about a specified droplet.
-// Comment out when done.
-// https://developers.digitalocean.com/documentation/v2/#retrieve-an-existing-droplet-by-id
-// REMEMBER POST != GET
-// Most importantly, print out IP address!
-var dropletId = "xxxx";
-
-// #############################################
-// #5 In the command line, ping your server, make sure it is alive!
-// ping xx.xx.xx.xx
-
-// #############################################
-// #6 Extend the client to DESTROY the specified droplet.
-// Comment out when done.
-// https://developers.digitalocean.com/documentation/v2/#delete-a-droplet
-// HINT, use the DELETE verb.
-// HINT #2, needle.delete(url, data, options, callback), data needs passed as null.
-// No response body will be sent back, but the response code will indicate success.
-// Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
-// 	if(!err && resp.statusCode == 204)
-// 	{
-//			console.log("Deleted!");
-// 	}
-
-// #############################################
-// #7 In the command line, ping your server, make sure it is dead!
-// ping xx.xx.xx.xx
-// It could be possible that digitalocean reallocated your IP address to another server, so don't fret it is still pinging.
+// Run workshop code...
+(async () => {
+	await provision();
+})();
