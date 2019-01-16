@@ -75,6 +75,15 @@ For example, if an API was created to enable an application to get information a
 
 Query parameters can be provided to provide additional information to the request. For example, `GET /users?country=France` would return a list of all users in France.
 
-REST APIs typically consume and produce JSON-formatted content. Responses will 
-Creating a new resource typically involves passing an additional object via the request body that is sent to the server.
+A response typically is composed of several parts: including headers, status code, and body.
+
+Headers will may useful information, such as rate-limits quotas, or properties of the response, such as whether it is encoded or compressed in a particular format.
+
+The [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) will allow you to verify the success of an operation or indicate different types of failures. Additional error information may be sent via the request body.
+
+The body will typically contain a JSON-formated object or an array. Some actions, such as deleting an object, may not return any data in the response body.
+
+When sending a request, a JSON-formatted object is sent attached via the request body to the server.
+
+
 
