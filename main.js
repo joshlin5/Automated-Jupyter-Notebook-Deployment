@@ -1,9 +1,19 @@
-var needle = require("needle");
-var os   = require("os");
+const needle = require("needle");
+const chalk = require('chalk');
 
 var config = {};
 config.token = process.env.DOTOKEN;
-console.log("Your token is:", config.token);
+
+if( !config.token )
+{
+	console.log(chalk`{red.bold DOTOKEN is not defined!}`);
+	console.log(`Please set your environment variables with appropriate token.`);
+	console.log(chalk`{italic You may need to refresh your shell in order for your changes to take place.}`);
+	process.exit(1);
+}
+
+console.log(chalk.green(`Your token is: ${config.token}`));
+
 
 var headers =
 {
@@ -52,11 +62,12 @@ var client =
 client.listRegions(function(error, response)
 {
 	var data = response.body;
-	console.log( JSON.stringify(response.body) );
+	// Uncomment if you need help debugging response.
+	// console.log( JSON.stringify(response.body, null, 3) );
 
 	if( response.headers )
 	{
-		console.log( "Calls remaining", response.headers["ratelimit-remaining"] );
+		console.log( chalk.yellow(`Calls remaining ${response.headers["ratelimit-remaining"]}`) );
 	}
 
 	if( data.regions )
@@ -99,7 +110,7 @@ client.listRegions(function(error, response)
 // https://developers.digitalocean.com/documentation/v2/#retrieve-an-existing-droplet-by-id
 // REMEMBER POST != GET
 // Most importantly, print out IP address!
-var dropletId = "3788359";
+var dropletId = "xxxx";
 
 // #############################################
 // #5 In the command line, ping your server, make sure it is alive!
