@@ -15,14 +15,14 @@ You must get into pairs.  And there is a *twist*.
 
 ```
 # Mac/Linux
-export DOTOKEN="xxx"
+export NCSU_DOTOKEN="xxx"
 # Windows
-setx DOTOKEN xxx
+setx NCSU_DOTOKEN xxx
 ```
 
 ##### Run the node program
 
-`node main.js`
+`node index.js`
 
 If everything is set correctly, you should see output like the following:
 
@@ -37,7 +37,7 @@ You will be experimenting with code for provisioning a new server from a cloud p
 
 The code makes use of the [got api](https://github.com/sindresorhus/got#readme) for making http requests, suitable for interacting with a REST API.
 
-Complete the remaining 7 steps specified in the code comments of [`main.js`](main.js).
+Complete the remaining 7 steps specified in the code comments of [`index.js`](index.js).
 
 1. List regions.
 2. List VM images.
@@ -47,8 +47,7 @@ Complete the remaining 7 steps specified in the code comments of [`main.js`](mai
 6. Destroy droplet
 7. Ping ip, make sure dead.
 
-**Bonus**: The first 3 pairs to finish workshop will receive +5 points on their final workshop grade. *But*,
-if the rate-limit hits 0, everyone will loose 5 points on their workshop final grade. 
+**Bonus**: The first 3 pairs to finish workshop will receive 1 bonus point on their final workshop/class activities. *But*, if the rate-limit hits 0, everyone will loose 1 point on their workshop final grade. 
 
 <img src="https://cloud.githubusercontent.com/assets/742934/9525410/ff96de96-4cb1-11e5-84af-19b70cbae957.png" alt="Saw" width="500px;"/>
 
