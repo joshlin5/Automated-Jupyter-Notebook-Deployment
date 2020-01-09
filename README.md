@@ -89,27 +89,6 @@ fetch("https://httpbin.org/anything")
 
 This constructs as simple `GET` request to `/https://httpbin.org/anything` and returns a copy of what was sent.
 
-### Sending a PUT request from inside the browser
-
-```javascript
-// The data we are going to send in our request
-data = {
-    coffee: 1, milk: 1, sugar: 1, chocolate: 1
-}
-// Headers describing how the request body is formatted.
-headers = new Headers();
-headers.append('Content-Type', 'application/json');
-// Request information
-fetchData = { 
-    method: 'PUT', 
-    body: JSON.stringify(data),
-    headers: headers
-}
-fetch('https://httpbin.org/anything', fetchData)
-    .then(data => data.json())
-    .then(result => console.log(result));
-```
-
 ### Sending request using curl
 
 Here are the same examples as above, but written to work with curl:
