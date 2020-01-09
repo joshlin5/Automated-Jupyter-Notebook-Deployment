@@ -4,17 +4,17 @@ const os     = require('os');
 
 var config = {};
 // Retrieve our api token from the environment variables.
-config.token = process.env.DOTOKEN;
+config.token = process.env.NCSU_DOTOKEN;
 
 if( !config.token )
 {
-	console.log(chalk`{red.bold DOTOKEN is not defined!}`);
+	console.log(chalk`{red.bold NCSU_DOTOKEN is not defined!}`);
 	console.log(`Please set your environment variables with appropriate token.`);
 	console.log(chalk`{italic You may need to refresh your shell in order for your changes to take place.}`);
 	process.exit(1);
 }
 
-console.log(chalk.green(`Your token is: ${config.token}`));
+console.log(chalk.green(`Your token is: ${config.token.substring(0,4)}...`));
 
 // Configure our headers to use our token when making REST api requests.
 const headers =
