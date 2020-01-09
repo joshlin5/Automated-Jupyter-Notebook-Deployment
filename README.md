@@ -154,6 +154,8 @@ You can use `curl` to help debug your calls:
 curl -X GET -H 'Content-Type: application/json' -H "Authorization: Bearer $NCSU_DOTOKEN" "https://api.digitalocean.com/v2/images"
 ```
 
+_Note: For Windows, use `%NCSU_DOTOKEN%` in your curl command to expand the environment variable._
+
 
 **Bonus**: The first 3 pairs to finish workshop will receive 1 bonus point on their final workshop/class activities. *But*, if the rate-limit hits 0, everyone will loose 1 point on their workshop final grade. 
 
