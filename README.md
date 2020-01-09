@@ -31,33 +31,13 @@ Your token is: xxxxxx
 Calls remaining 4931
 ```
 
-### Workshop
-
-You will be experimenting with code for provisioning a new server from a cloud provider at a particular region, that is initialized with a specified virtual machine image, using the [digitalocean api v2](https://developers.digitalocean.com/v2/).
-
-The code makes use of the [got api](https://github.com/sindresorhus/got#readme) for making http requests, suitable for interacting with a REST API.
-
-Complete the remaining 7 steps specified in the code comments of [`index.js`](index.js).
-
-1. List regions.
-2. List VM images.
-3. Create droplet.
-4. Get droplet ip
-5. Ping ip
-6. Destroy droplet
-7. Ping ip, make sure dead.
-
-**Bonus**: The first 3 pairs to finish workshop will receive 1 bonus point on their final workshop/class activities. *But*, if the rate-limit hits 0, everyone will loose 1 point on their workshop final grade. 
-
-<img src="https://cloud.githubusercontent.com/assets/742934/9525410/ff96de96-4cb1-11e5-84af-19b70cbae957.png" alt="Saw" width="500px;"/>
-
 ## REST Refresher
 
 A very brief overview on REST APIs:
 
 A *RESTful architecture*, is an architectural style ([Fielding](https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm)) for providing resources to clients using a set of request verbs and resource locations. A REST API allows a client to access resources provided by a service.
 
-A useful [workshop on using the GitHub REST APIs](https://github.com/CSC-510/REST-SELENIUM) can be done for more practice.
+A useful [workshop on using the GitHub REST APIs](https://raw.githubusercontent.com/CSC-510/REST) can be done for more practice.
 
 ### Concepts
 
@@ -83,6 +63,104 @@ The [status code](https://en.wikipedia.org/wiki/List_of_HTTP_status_codes) will 
 The body will typically contain a JSON-formated object or an array. Some actions, such as deleting an object, may not return any data in the response body.
 
 When sending a request, a JSON-formatted object is sent attached via the request body to the server.
+
+## Concepts
+
+Simply put, an API (or Application Programming Interface) defines a specification for how to communicate with a computer program or subset thereof. An API lays out what functionality is offered, what parameters must be provided when making calls, and provides some guarantees about the return type given the preconditions are satisfied. Fundamentally, a complete and well-documented API makes it easier to use a piece of code as a “building block” for building a larger system.
+
+A REST API is a subtype of API that is geared towards Internet-facing systems. The goal of REST APIs is to provide painless communication and interoperability between these Internet-facing applications and systems. REST APIs typically allow (often with some sort of authentication) a manipulation of the various types of entities (recipes, inventory, etc) that a web application revolves around.
+
+The key concept behind REST APIs is that they are inherently stateless, that is, everything that a server needs to know to complete a request or a client needs to know about the results is contained within the request itself. This is contrary to the notion of a server maintaining a session where it stores information about a series of transactions with a particular client, or cookies where a client keeps similar information stored on its end.
+
+REST APIs typically consume and produce JSON-formatted content. A successor to XML, JSON documents are easy for a computer to parse and easy for a human to read.
+
+### HTTP
+
+![http](img/http.png)
+
+
+## Practicting with a REST Client
+
+Let's see how a javascript client application can communicate with a server using a REST API call.
+
+### Sending a GET request from inside the browser
+
+In a browser, visit http://httpbin.org/
+
+Open the developer's tool console (in your Web browser) and execute this code inside of the console.
+
+*Note:* If you try this same code from a different page, you'll get a Cross-Origin Resource Sharing (CORS) error.
+
+```Javascript
+fetch("https://httpbin.org/anything")
+    .then(data => data.json())
+    .then(result => console.log(result));
+```
+
+This constructs as simple `GET` request to `/https://httpbin.org/anything` and returns a copy of what was sent.
+
+### Sending a PUT request from inside the browser
+
+```javascript
+// The data we are going to send in our request
+data = {
+    coffee: 1, milk: 1, sugar: 1, chocolate: 1
+}
+// Headers describing how the request body is formatted.
+headers = new Headers();
+headers.append('Content-Type', 'application/json');
+// Request information
+fetchData = { 
+    method: 'PUT', 
+    body: JSON.stringify(data),
+    headers: headers
+}
+fetch('https://httpbin.org/anything', fetchData)
+    .then(data => data.json())
+    .then(result => console.log(result));
+```
+
+### Sending request using curl
+
+Here are the same examples as above, but written to work with curl:
+
+```bash
+curl --request GET https://httpbin.org/anything
+```
+
+```bash
+curl --request PUT -H "Content-Type: application/json" --data '{"coffee":1,"milk":1,"sugar":1,"chocolate":1}' https://httpbin.org/anything
+```
+
+## Workshop
+
+You will be experimenting with code for provisioning a new server from a cloud provider at a particular region, that is initialized with a specified virtual machine image, using the [digitalocean api v2](https://developers.digitalocean.com/v2/).
+
+The code makes use of the [got api](https://github.com/sindresorhus/got#readme) for making http requests, suitable for interacting with a REST API.
+
+Complete the remaining 7 steps specified in the code comments of [`index.js`](index.js).
+
+1. List regions.
+2. List VM images.
+3. Create droplet.
+4. Get droplet ip
+5. Ping ip
+6. Destroy droplet
+7. Ping ip, make sure dead.
+
+You can use `curl` to help debug your calls:
+
+```bash
+curl -X GET -H 'Content-Type: application/json' -H "Authorization: Bearer $NCSU_DOTOKEN" "https://api.digitalocean.com/v2/images"
+```
+
+
+**Bonus**: The first 3 pairs to finish workshop will receive 1 bonus point on their final workshop/class activities. *But*, if the rate-limit hits 0, everyone will loose 1 point on their workshop final grade. 
+
+<img src="https://cloud.githubusercontent.com/assets/742934/9525410/ff96de96-4cb1-11e5-84af-19b70cbae957.png" alt="Saw" width="500px;"/>
+
+
+
 
 
 
