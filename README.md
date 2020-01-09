@@ -87,7 +87,7 @@ fetch("https://httpbin.org/anything")
     .then(result => console.log(result));
 ```
 
-This constructs as simple `GET` request to `/https://httpbin.org/anything` and returns a copy of what was sent.
+This constructs as simple `GET` request to `https://httpbin.org/anything` and returns a copy of what was sent.
 
 ### Sending request using curl
 
