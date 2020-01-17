@@ -29,9 +29,23 @@ class DigitalOceanProvider
 	// Documentation for needle:
 	// https://github.com/tomas/needle
 
+	async makeRequest(url)
+	{
+		let response = await got(url, { headers: headers, json:true })
+							 .catch(err => console.error(`${url} ${err}`));
+							 
+		if( !response ) return;
+
+		if( response.headers )
+		{
+			console.log( chalk.yellow(`Calls remaining ${response.headers["ratelimit-remaining"]}`) );
+		}
+		return response;
+	}
+
 	async listRegions()
 	{
-		let response = await got('https://api.digitalocean.com/v2/regions', { headers: headers, json:true })
+		let response = await got('https://api.digitalocean.com/v2/regions', { headers: headers, responseType: 'json' })
 							 .catch(err => console.error(`listRegions ${err}`));
 							 
 		if( !response ) return;
@@ -40,7 +54,7 @@ class DigitalOceanProvider
 		{
 			for( let region of response.body.regions)
 			{
-				// Print out
+				console.log( `Region: ${region.name} Slug: ${region.slug}`);
 			}
 		}
 
@@ -53,6 +67,11 @@ class DigitalOceanProvider
 	async listImages( )
 	{
 		// HINT: Add this to the end to get better filter results: ?type=distribution&per_page=100
+		let response = await this.makeRequest('https://api.digitalocean.com/v2/images?type=distribution&per_page=100')
+		for (var img of response.body.images )
+		{
+			console.log( img.slug );			
+		}
 	}
 
 	async createDroplet (dropletName, region, imageName )
@@ -78,24 +97,24 @@ class DigitalOceanProvider
 
 		console.log("Attempting to create: "+ JSON.stringify(data) );
 
-		// let response = await got.post("https://api.digitalocean.com/v2/droplets", 
-		// {
-		// 	headers:headers,
-		// 	json:true,
-		// 	body: data
-		// }).catch( err => 
-		// 	console.error(chalk.red(`createDroplet: ${err}`)) 
-		// );
+		let response = await got.post("https://api.digitalocean.com/v2/droplets", 
+		{
+			headers:headers,
+			json:true,
+			body: data
+		}).catch( err => 
+			console.error(chalk.red(`createDroplet: ${err}`)) 
+		);
 
-		// if( !response ) return;
+		if( !response ) return;
 
-		// console.log(response.statusCode);
-		// console.log(response.body);
+		console.log(response.statusCode);
+		console.log(response.body);
 
-		// if(response.statusCode == 202)
-		// {
-		// 	console.log(chalk.green(`Created droplet id ${response.body.droplet.id}`));
-		// }
+		if(response.statusCode == 202)
+		{
+			console.log(chalk.green(`Created droplet id ${response.body.droplet.id}`));
+		}
 	}
 
 	async dropletInfo (id)
@@ -107,15 +126,17 @@ class DigitalOceanProvider
 		}
 
 		// Make REST request
+		let response = await this.makeRequest(`https://api.digitalocean.com/v2/droplets/${id}`)
 
 		if( !response ) return;
 
 		if( response.body.droplet )
 		{
 			let droplet = response.body.droplet;
-			console.log(droplet);
+			//console.log(droplet);
 
 			// Print out IP address
+			console.log(droplet.networks.v4[0].ip_address )
 		}
 
 	}
@@ -166,14 +187,14 @@ async function provision()
 	// #############################################
 	// #3 Create an droplet with the specified name, region, and image
 	// Comment out when completed. ONLY RUN ONCE!!!!!
-	var name = "UnityId"+os.hostname();
-	var region = ""; // Fill one in from #1
-	var image = ""; // Fill one in from #2
+	// var name = "UnityId"+os.hostname();
+	// var region = "nyc1"; // Fill one in from #1
+	// var image = "ubuntu-18-04-x64"; // Fill one in from #2
 	// await client.createDroplet(name, region, image);
 
 	// Record the droplet id that you see print out in a variable.
 	// We will use this to interact with our droplet for the next steps.
-	// var dropletId = <id from step number 3>;
+	var dropletId = 174945416;
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// BEFORE MOVING TO STEP FOR, REMEMBER TO COMMENT OUT THE `createDroplet()` call!!!
