@@ -26,23 +26,6 @@ const headers =
 
 class DigitalOceanProvider
 {
-	// Documentation for needle:
-	// https://github.com/tomas/needle
-
-	async makeRequest(url)
-	{
-		let response = await got(url, { headers: headers, json:true })
-							 .catch(err => console.error(`${url} ${err}`));
-							 
-		if( !response ) return;
-
-		if( response.headers )
-		{
-			console.log( chalk.yellow(`Calls remaining ${response.headers["ratelimit-remaining"]}`) );
-		}
-		return response;
-	}
-
 	async listRegions()
 	{
 		let response = await got('https://api.digitalocean.com/v2/regions', { headers: headers, responseType: 'json' })
@@ -54,7 +37,7 @@ class DigitalOceanProvider
 		{
 			for( let region of response.body.regions)
 			{
-				console.log( `Region: ${region.name} Slug: ${region.slug}`);
+
 			}
 		}
 
@@ -67,11 +50,6 @@ class DigitalOceanProvider
 	async listImages( )
 	{
 		// HINT: Add this to the end to get better filter results: ?type=distribution&per_page=100
-		let response = await this.makeRequest('https://api.digitalocean.com/v2/images?type=distribution&per_page=100')
-		for (var img of response.body.images )
-		{
-			console.log( img.slug );			
-		}
 	}
 
 	async createDroplet (dropletName, region, imageName )
@@ -100,8 +78,7 @@ class DigitalOceanProvider
 		let response = await got.post("https://api.digitalocean.com/v2/droplets", 
 		{
 			headers:headers,
-			json:true,
-			body: data
+			json: data
 		}).catch( err => 
 			console.error(chalk.red(`createDroplet: ${err}`)) 
 		);
@@ -136,7 +113,6 @@ class DigitalOceanProvider
 			//console.log(droplet);
 
 			// Print out IP address
-			console.log(droplet.networks.v4[0].ip_address )
 		}
 
 	}
@@ -188,13 +164,13 @@ async function provision()
 	// #3 Create an droplet with the specified name, region, and image
 	// Comment out when completed. ONLY RUN ONCE!!!!!
 	// var name = "UnityId"+os.hostname();
-	// var region = "nyc1"; // Fill one in from #1
-	// var image = "ubuntu-18-04-x64"; // Fill one in from #2
+	// var region = ""; // Fill one in from #1
+	// var image = ""; // Fill one in from #2
 	// await client.createDroplet(name, region, image);
 
 	// Record the droplet id that you see print out in a variable.
 	// We will use this to interact with our droplet for the next steps.
-	var dropletId = 174945416;
+	//var dropletId = ;
 
 	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	// BEFORE MOVING TO STEP FOR, REMEMBER TO COMMENT OUT THE `createDroplet()` call!!!
