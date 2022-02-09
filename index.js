@@ -1,4 +1,4 @@
-const got    = require("got");
+const axios    = require("axios");
 const chalk  = require('chalk');
 const os     = require('os');
 
@@ -28,16 +28,18 @@ class DigitalOceanProvider
 {
 	async listRegions()
 	{
-		let response = await got('https://api.digitalocean.com/v2/regions', { headers: headers, responseType: 'json' })
+		let response = await axios.get('https://api.digitalocean.com/v2/regions', { headers: headers })
 							 .catch(err => console.error(`listRegions ${err}`));
 							 
 		if( !response ) return;
 
-		if( response.body.regions )
+		console.log( response.data );
+		
+		if( response.data.regions )
 		{
-			for( let region of response.body.regions)
+			for( let region of response.data.regions)
 			{
-
+				console.log( region.slug )
 			}
 		}
 
@@ -64,7 +66,7 @@ class DigitalOceanProvider
 		{
 			"name": dropletName,
 			"region":region,
-			"size":"512mb",
+			"size":"s-1vcpu-1gb",
 			"image":imageName,
 			"ssh_keys":null,
 			"backups":false,
@@ -75,22 +77,22 @@ class DigitalOceanProvider
 
 		console.log("Attempting to create: "+ JSON.stringify(data) );
 
-		let response = await got.post("https://api.digitalocean.com/v2/droplets", 
+		let response = await axios.post("https://api.digitalocean.com/v2/droplets", 
+		data,
 		{
 			headers:headers,
-			json: data
 		}).catch( err => 
 			console.error(chalk.red(`createDroplet: ${err}`)) 
 		);
 
 		if( !response ) return;
 
-		console.log(response.statusCode);
-		console.log(response.body);
+		console.log(response.status);
+		console.log(response.data);
 
-		if(response.statusCode == 202)
+		if(response.status == 202)
 		{
-			console.log(chalk.green(`Created droplet id ${response.body.droplet.id}`));
+			console.log(chalk.green(`Created droplet id ${response.data.droplet.id}`));
 		}
 	}
 
@@ -103,13 +105,13 @@ class DigitalOceanProvider
 		}
 
 		// Make REST request
-		let response = await this.makeRequest(`https://api.digitalocean.com/v2/droplets/${id}`)
+		let response = null; /// await axios.get
 
 		if( !response ) return;
 
-		if( response.body.droplet )
+		if( response.data.droplet )
 		{
-			let droplet = response.body.droplet;
+			let droplet = response.data.droplet;
 			//console.log(droplet);
 
 			// Print out IP address
@@ -131,7 +133,7 @@ class DigitalOceanProvider
 
 		// No response body will be sent back, but the response code will indicate success.
 		// Specifically, the response code will be a 204, which means that the action was successful with no returned body data.
-		if(response.statusCode == 204)
+		if(response.status == 204)
 		{
 			console.log(`Deleted droplet ${id}`);
 		}
