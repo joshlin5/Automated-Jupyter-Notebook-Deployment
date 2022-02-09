@@ -33,13 +33,13 @@ class DigitalOceanProvider
 							 
 		if( !response ) return;
 
-		console.log( response.data );
+		// console.log( response.data );
 		
 		if( response.data.regions )
 		{
 			for( let region of response.data.regions)
 			{
-				console.log( region.slug )
+				
 			}
 		}
 
