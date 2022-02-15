@@ -1,0 +1,28 @@
+{
+  "name": "p",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CSC-DevOps/P.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CSC-DevOps/P/issues"
+  },
+  "homepage": "https://github.com/CSC-DevOps/P#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "hasbin": "^1.2.3",
+    "tail": "^2.2.4",
+    "virtcrud": "github:ottomatica/virtcrud",
+    "waitssh": "^1.0.5",
+    "yargs": "^17.3.1"
+  }
+}
