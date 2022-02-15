@@ -1,0 +1,24 @@
+{
+  "name": "v",
+  "version": "1.0.0",
+  "description": "Simple virtualization script.",
+  "main": "index.js",
+  "bin": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "keywords": [
+    "virtual",
+    "box"
+  ],
+  "author": "YOU",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "hasbin": "^1.2.3",
+    "tail": "^2.2.4",
+    "virtcrud": "github:ottomatica/virtcrud",
+    "waitssh": "^1.0.5",
+    "yargs": "^17.3.1"
+  }
+}
