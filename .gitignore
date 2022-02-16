@@ -1,1 +1,5 @@
 node_modules/
+syslinux/jn.iso
+lib/scripts/initrd
+lib/scripts/rootfs
+lib/scripts/vmlinuz
