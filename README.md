@@ -5,9 +5,13 @@
 
 Commands for Mac m1:
 1. Build your custom docker image
+[Dockerfile](https://github.ncsu.edu/CSC-DevOps-S22/HW2-jlin36-DevOps/blob/master/images/Dockerfile)
 `p init`
 
 2. Build rootfs, extract kernel, initrd and package as iso.
+[/lib/build.js](https://github.ncsu.edu/CSC-DevOps-S22/HW2-jlin36-DevOps/blob/master/lib/builder.js)
+[/lib/scripts/make-rootfs.sh](https://github.ncsu.edu/CSC-DevOps-S22/HW2-jlin36-DevOps/blob/master/lib/scripts/make-rootfs.sh)
+[/lib/scripts/package-iso.sh](https://github.ncsu.edu/CSC-DevOps-S22/HW2-jlin36-DevOps/blob/master/lib/scripts/package-iso.sh)
 `p build`
 
 3. docker run with volume where rootfs is at and an interactive shell
