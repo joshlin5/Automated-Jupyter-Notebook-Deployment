@@ -20,7 +20,6 @@ chroot rootfs1 apt-get update
 chroot rootfs1 apt-get install python3
 chroot rootfs1 apt-get install -y python3-pip
 chroot rootfs1 apt-get install python3-notebook -y
-#chroot rootfs1 pip3 install notebook
 chroot rootfs1 pip3 install --no-input --exists-action=i pandas
 chroot rootfs1 pip3 install --no-input --exists-action=i seaborn
 chroot rootfs1 bash -c "groupadd -r ubuntu && useradd -m -r -g ubuntu ubuntu -s /bin/bash"
